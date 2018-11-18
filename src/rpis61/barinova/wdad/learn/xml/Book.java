@@ -1,0 +1,66 @@
+package rpis61.barinova.wdad.learn.xml;
+
+import javax.xml.bind.annotation.*;
+
+//@XmlAccessorType(XmlAccessType.FIELD)
+public class Book {
+    @XmlElement
+    private  Author author;
+    @XmlElement
+    private String name;
+    @XmlElement
+    private String printYear;
+    @XmlElement
+    private Genre genre;
+    private String takeDate;
+
+    private Book(){
+        name = "";
+        author = null;
+        genre = null;
+        printYear = null;
+    }
+
+    public Book(Author author, String name, String printyear, Genre genre, String takeDate) {
+        this.author = author;
+        this.name = name;
+        this.printYear = printyear;
+        this.genre = genre;
+        this.takeDate = takeDate;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPrintYear() {
+        return printYear;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public String getTakeDate() {
+        return takeDate;
+    }
+
+    public void setTakeDate(String takeDate) {
+        this.takeDate = takeDate;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(author.toString());
+        sb.append("\n").append(name).append("\n").append(genre).append(" ,").append(printYear);
+        sb.append("\nTake date: ").append(takeDate);
+        return sb.toString();
+    }
+
+
+}
