@@ -16,32 +16,18 @@ public class XmlTask {
         this.file = file;
         this.library = library;
     }
-    public void writeXML(File file) {
-        JAXBContext context = null;
-        try {
-            context = JAXBContext.newInstance(Library.class);
+    public void saveXML(File file) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Library.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.marshal(library,file );
-//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-//        marshaller.marshal(library, System.out );
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void readXML() {
-        JAXBContext context = null;
-        try {
-            context = JAXBContext.newInstance(Library.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        library = (Library) unmarshaller.unmarshal(file);
-        Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.marshal(library, System.out );
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+    }
 
+    public void loadXML() throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Library.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        library = (Library) unmarshaller.unmarshal(file);
     }
 
     public List<Reader> negligentReaders(){
@@ -54,7 +40,7 @@ public class XmlTask {
         return r;
     }
 
-    public boolean removeBook(Reader reader, Book book){
+    public boolean removeBook(Reader reader, Book book) throws JAXBException {
         if (library.getReader( reader.getFirstName(),
                 reader.getSecondName()) == null)
         return false;
@@ -62,11 +48,11 @@ public class XmlTask {
                 reader.getFirstName(),
                 reader.getSecondName()
         ).returnBook(book);
-        writeXML(file);
+        saveXML(file);
         return true;
     }
 
-    public void addBook (Reader reader, Book book){
+    public void addBook (Reader reader, Book book) throws JAXBException {
         if(library.getReader( reader.getFirstName(),reader.getSecondName()) == null){
             library.openLibraryCard(reader);
         }
@@ -74,7 +60,7 @@ public class XmlTask {
                 reader.getFirstName(),
                 reader.getSecondName()
         ).takeBook(book);
-        writeXML(file);
+        saveXML(file);
     }
 
     public List<Book> takenBooks(Reader reader) {

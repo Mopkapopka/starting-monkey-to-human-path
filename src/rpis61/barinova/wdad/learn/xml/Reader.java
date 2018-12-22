@@ -1,27 +1,44 @@
 package rpis61.barinova.wdad.learn.xml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class Reader extends Man{
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Reader {
+    @XmlAttribute
+    private String firstName;
+    @XmlAttribute
+    private String secondName;
+    @XmlElement(name = "book")
     private ArrayList<Book> takenBooks;
-
-    private Reader(){
-        super();
-    }
+    @XmlElement(name = "takedate")
+    private ArrayList<TakeDate> takeDates;
 
     Reader(String firstName, String secondName) {
-        super(firstName, secondName);
+        this.firstName=firstName;
+        this.secondName = secondName;
         takenBooks = new ArrayList<>();
+        takeDates = new ArrayList();
     }
 
+    Reader(){
+        this(null,null);
+    }
     void takeBook(Book book){
         takenBooks.add(book);
+        takeDates.add(new TakeDate(LocalDate.now()));
     }
 
     boolean returnBook(Book book){
         for (Book b : takenBooks){
             if(b.getName().equals(book.getName()) &&  b.getAuthor().equals(book.getAuthor())){
+                takeDates.remove(takenBooks.indexOf(b));
                 takenBooks.remove(b);
                 return true;
             }
@@ -29,7 +46,15 @@ public class Reader extends Man{
             return false;
     }
 
-    @XmlElement(name = "book")
+    boolean isDebtor(){
+        for (var date : takeDates) {
+            if ((int)(LocalDate.now().toEpochDay() - date.toEpochDay() )> 14)
+                return true;
+        }
+        return false;
+    }
+
+
     public ArrayList<Book> getTakenBooks() {
         return takenBooks;
     }
@@ -51,4 +76,19 @@ public class Reader extends Man{
         return sb.toString();
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
 }

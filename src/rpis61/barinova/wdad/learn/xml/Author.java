@@ -1,19 +1,39 @@
 package rpis61.barinova.wdad.learn.xml;
 
-public class Author extends Man {
+public class Author {
+    private String firstName;
+    private String secondName;
+
+    Author(String firstName, String secondName){
+        this.firstName = firstName;
+        this.secondName = secondName;
+    }
     Author(){
-        super();
+        this(null,null);
     }
 
-    Author(String firstName, String secondName) {
-        super(firstName, secondName);
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     @Override
-    public String toString(){
-       return super.toString();
+    public String toString() {
+        StringBuilder sb = new StringBuilder(firstName);
+        sb.append(" ").append(secondName);
+        return sb.toString();
     }
-
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;

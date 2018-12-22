@@ -16,14 +16,11 @@ public class XmlTask_test {
         Library library = new Library();
         library.openLibraryCard(reader);
         XmlTask xt = new XmlTask(file,library);
-        xt.writeXML(file);
-        xt.readXML();
+        xt.saveXML(file);
+        xt.loadXML();
         System.out.println("Взятые книги");
         List<Book> books = xt.takenBooks(reader);
         System.out.println(books);
-        System.out.println("Должник");
-        List<Reader> readers = xt.negligentReaders();
-        System.out.println(readers.get(0).toString());
         System.out.println( xt.removeBook(reader,book) );
     }
 }

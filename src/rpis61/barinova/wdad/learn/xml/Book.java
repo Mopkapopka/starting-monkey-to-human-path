@@ -2,7 +2,6 @@ package rpis61.barinova.wdad.learn.xml;
 
 import javax.xml.bind.annotation.*;
 
-//@XmlAccessorType(XmlAccessType.FIELD)
 public class Book {
     @XmlElement
     private  Author author;
@@ -10,9 +9,8 @@ public class Book {
     private String name;
     @XmlElement
     private String printYear;
-    @XmlElement
+    @XmlAttribute
     private Genre genre;
-    private String takeDate;
 
     private Book(){
         name = "";
@@ -26,7 +24,6 @@ public class Book {
         this.name = name;
         this.printYear = printyear;
         this.genre = genre;
-        this.takeDate = takeDate;
     }
 
     public Author getAuthor() {
@@ -45,20 +42,13 @@ public class Book {
         return genre;
     }
 
-    public String getTakeDate() {
-        return takeDate;
-    }
 
-    public void setTakeDate(String takeDate) {
-        this.takeDate = takeDate;
-    }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(author.toString());
         sb.append("\n").append(name).append("\n").append(genre).append(" ,").append(printYear);
-        sb.append("\nTake date: ").append(takeDate);
         return sb.toString();
     }
 
